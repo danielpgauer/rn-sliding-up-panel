@@ -32,7 +32,8 @@ class SlidingUpPanel extends React.Component {
     allowDragging: PropTypes.bool,
     showBackdrop: PropTypes.bool,
     contentStyle: PropTypes.any,
-    children: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    pointerEvents: PropTypes.string
   }
 
   static defaultProps = {
@@ -45,7 +46,8 @@ class SlidingUpPanel extends React.Component {
     onRequestClose: () => {},
     allowMomentum: true,
     allowDragging: true,
-    showBackdrop: true
+    showBackdrop: true,
+    pointerEvents: 'box-none'
   }
 
   constructor(props) {
@@ -192,7 +194,7 @@ class SlidingUpPanel extends React.Component {
       this._isAtBottom = true
 
       if (this._backdrop != null) {
-        this._backdrop.setNativeProps({pointerEvents: 'none'})
+        //this._backdrop.setNativeProps({pointerEvents: 'none'})
       }
 
       if (!this._requestCloseTriggered) {
@@ -205,7 +207,7 @@ class SlidingUpPanel extends React.Component {
       this._isAtBottom = false
 
       if (this._backdrop != null) {
-        this._backdrop.setNativeProps({pointerEvents: 'box-only'})
+        //this._backdrop.setNativeProps({pointerEvents: 'box-only'})
       }
     }
 
@@ -260,7 +262,7 @@ class SlidingUpPanel extends React.Component {
     return (
       <Animated.View
         key="backdrop"
-        pointerEvents="box-only"
+        pointerEvents={this.props.pointerEvents}
         ref={c => (this._backdrop = c)}
         onTouchStart={() => this._flick.stop()}
         onTouchEnd={() => this.props.onRequestClose()}
@@ -291,7 +293,7 @@ class SlidingUpPanel extends React.Component {
       return (
         <Animated.View
           key="content"
-          pointerEvents="box-none"
+          pointerEvents={this.props.pointerEvents}
           style={animatedContainerStyles}>
           {this.props.children(this._panResponder.panHandlers)}
         </Animated.View>
@@ -301,7 +303,7 @@ class SlidingUpPanel extends React.Component {
     return (
       <Animated.View
         key="content"
-        pointerEvents="box-none"
+        pointerEvents={this.props.pointerEvents}
         style={animatedContainerStyles}
         {...this._panResponder.panHandlers}>
         {this.props.children}
