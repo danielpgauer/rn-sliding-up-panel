@@ -33,7 +33,8 @@ class SlidingUpPanel extends React.Component {
     showBackdrop: PropTypes.bool,
     contentStyle: PropTypes.any,
     children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    pointerEvents: PropTypes.string
+    pointerEvents: PropTypes.string,
+    startPosition: PropTypes.number
   }
 
   static defaultProps = {
@@ -75,7 +76,7 @@ class SlidingUpPanel extends React.Component {
 
     const {top, bottom} = props.draggableRange
 
-    this._animatedValueY = this.state.visible ? -top : -bottom
+    this._animatedValueY = this.state.visible ? this.props.startPosition ? -this.props.startPosition : -top : -bottom;
     this._translateYAnimation = new Animated.Value(this._animatedValueY)
     this._flick = new FlickAnimation(this._translateYAnimation, -top, -bottom)
 
@@ -221,6 +222,11 @@ class SlidingUpPanel extends React.Component {
     }
 
     return this._triggerAnimation({toValue: mayBeValueOrOptions})
+  }
+
+  reset() {
+    this._animatedValueY = this.state.visible ? this.props.startPosition ? -this.props.startPosition : -top : -bottom;
+    this._translateYAnimation.setValue(this._animatedValueY)
   }
 
   _triggerAnimation(options = {}) {
