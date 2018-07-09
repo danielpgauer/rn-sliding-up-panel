@@ -12,7 +12,7 @@ const deprecated = (condition, message) => condition && console.warn(message)
 
 const MINIMUM_VELOCITY_THRESHOLD = 0.1
 
-const MINIMUM_DISTANCE_THRESHOLD = 0.24
+const MINIMUM_DISTANCE_THRESHOLD = 5
 
 const DEFAULT_SLIDING_DURATION = 240
 
