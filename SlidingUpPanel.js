@@ -229,6 +229,24 @@ class SlidingUpPanel extends React.Component {
     this._translateYAnimation.setValue(this._animatedValueY)
   }
 
+  animToStart() {
+    const { startPosition } = this.props;
+
+    this._triggerAnimation({
+      toValue: -startPosition,
+      duration: 200
+    })
+  }
+
+  animToBottom() {
+    const { bottom } = this.props.draggableRange;
+
+    this._triggerAnimation({
+      toValue: -bottom,
+      duration: 200
+    })
+  }
+
   _triggerAnimation(options = {}) {
     const {
       toValue,
@@ -241,7 +259,7 @@ class SlidingUpPanel extends React.Component {
       duration,
       easing,
       toValue: -Math.abs(toValue),
-      delay: Platform.OS === 'android' ? 166.67 : undefined // to make it looks smooth on android
+      //delay: Platform.OS === 'android' ? 166.67 : undefined // to make it looks smooth on android
     }
 
     const animation = Animated.timing(
